@@ -1,4 +1,3 @@
-
 package servidor;
 
 import java.io.ObjectInputStream;
@@ -21,6 +20,7 @@ class Cliente extends Thread {
         }
 
         public void run() {
+            
             try {
                 //informacion en la consola
                 System.out.println("Conexion desde la IP: "+s.getInetAddress());
