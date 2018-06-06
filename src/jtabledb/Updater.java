@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Updater extends javax.swing.JFrame {
-    
+
     // Variables declaration - do not modify
     private javax.swing.JButton BtnEliminar;
     private javax.swing.JButton BtnAgregar;
@@ -17,21 +17,21 @@ public class Updater extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable JTConexiones;
     private javax.swing.JTextField JFNombre;
     private javax.swing.JTextField JFPosicion;
     private javax.swing.JButton BtnVer;
     private javax.swing.JTextField JFEquipo;
     private javax.swing.JButton BtnActualizar;
     // End of variables declaration
-    
+
     public Updater() {
         initComponents();
     }
 
     private void retrieve() {
         DefaultTableModel dm = new DBUpdater().getData();
-        jTable1.setModel(dm);
+        JTConexiones.setModel(dm);
     }
 
     //@SuppressWarnings("unchecked")
@@ -40,12 +40,12 @@ public class Updater extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        JTConexiones = new javax.swing.JTable();
         JLNombre = new javax.swing.JLabel();
         JLPosicion = new javax.swing.JLabel();
         JLEquipo = new javax.swing.JLabel();
         JLTitulo = new javax.swing.JLabel();
-        JFNombre=  new javax.swing.JTextField();
+        JFNombre = new javax.swing.JTextField();
         JFEquipo = new javax.swing.JTextField();
         JFPosicion = new javax.swing.JTextField();
         BtnVer = new javax.swing.JButton();
@@ -58,16 +58,16 @@ public class Updater extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 200, 100));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        JTConexiones.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{}
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        JTConexiones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(JTConexiones);
 
         JLNombre.setText("Nombre");
         JLPosicion.setText("Posición");
@@ -113,46 +113,46 @@ public class Updater extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
 
+        jPanel2Layout.setAutoCreateGaps(true);
+        jPanel2Layout.setAutoCreateContainerGaps(true);
+
         jPanel2Layout.setHorizontalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addComponent(JLNombre)
-                                                                        .addComponent(JLPosicion))
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                        .addComponent(JLPosicion)
+                                                                        .addComponent(JLEquipo)
+                                                                )
                                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(JFNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(JFPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addGap(21, 21, 21))
-                                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addComponent(JLEquipo)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(JFEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(0, 9, Short.MAX_VALUE))
+                                                                        .addComponent(JFNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(JFPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(JFEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        )
+                                                )
+                                        )
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                                 .addComponent(BtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(BtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                                                 .addComponent(BtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(BtnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addContainerGap())))
+                                                .addContainerGap()
+                                        )
+                                )
+                        )
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(BtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(73, 73, 73))
+                        )
         );
-        
+
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
@@ -191,12 +191,13 @@ public class Updater extends javax.swing.JFrame {
         JLTitulo.setText("Computadoras conectadas");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(234, 234, 234)
-                                .addComponent(JLTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(JLTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
@@ -206,7 +207,7 @@ public class Updater extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
+                                .addGap(50, 50, 50)
                                 .addComponent(JLTitulo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -251,9 +252,9 @@ public class Updater extends javax.swing.JFrame {
 
     //SET SELECTED VALUE TO TEXTFIELDS
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {
-        String name = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
-        String pos = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
-        String team = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
+        String name = JTConexiones.getValueAt(JTConexiones.getSelectedRow(), 1).toString();
+        String pos = JTConexiones.getValueAt(JTConexiones.getSelectedRow(), 2).toString();
+        String team = JTConexiones.getValueAt(JTConexiones.getSelectedRow(), 3).toString();
         JFNombre.setText(name);
         JFPosicion.setText(pos);
         JFEquipo.setText(team);
@@ -262,8 +263,8 @@ public class Updater extends javax.swing.JFrame {
 
     //UPDATE
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        int index = jTable1.getSelectedRow();
-        String id = jTable1.getValueAt(index, 0).toString();
+        int index = JTConexiones.getSelectedRow();
+        String id = JTConexiones.getValueAt(index, 0).toString();
 
         if (new DBUpdater().update(id, JFNombre.getText(), JFPosicion.getText(), JFEquipo.getText())) {
             JOptionPane.showMessageDialog(null, "Successfully Updated");
@@ -278,17 +279,17 @@ public class Updater extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Not Updated");
         }
     }
-    
+
     //DELETE
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {
         String[] options = {"Si", "No"};
-        
-        int index = jTable1.getSelectedRow();
+
+        int index = JTConexiones.getSelectedRow();
         System.out.println("ID:" + index);
         if (index != -1) {
             int answ = JOptionPane.showOptionDialog(null, "Estas seguro ??", "Confirmar", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
             if (answ == 0) {
-                String id = jTable1.getValueAt(index, 0).toString();
+                String id = JTConexiones.getValueAt(index, 0).toString();
                 if (new DBUpdater().delete(id)) {
                     JOptionPane.showMessageDialog(null, "Eliminado");
 
@@ -310,10 +311,7 @@ public class Updater extends javax.swing.JFrame {
 
     //CLEAR BUTTON CLICKED
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        jTable1.setModel(new DefaultTableModel());
+        JTConexiones.setModel(new DefaultTableModel());
     }
 
-    
-
-    
 }
