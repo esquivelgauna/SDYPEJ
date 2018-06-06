@@ -230,7 +230,6 @@ public class Updater extends javax.swing.JFrame {
     //RETRIEVE BUTTON CLICKED
     private void retrieveBtnActionPerformed(java.awt.event.ActionEvent evt) {
         retrieve();
-
     }
 
     //ADD OR SAVE
