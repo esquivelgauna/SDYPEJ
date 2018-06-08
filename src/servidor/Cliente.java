@@ -8,18 +8,20 @@ import java.util.Vector;
 import javax.swing.JFrame;
 
 class Cliente extends Thread {
+    
+        private View view;
+        
         private Socket s = null;
         private ObjectInputStream ois = null;
         private ObjectOutputStream oos = null;
-        private JFrame Tabla;
         ObjectInputStream DDatos = null;
         
         public static String p1 = null, p2 = null, p3 = null, p4 = null, p7 = null, p5=null,p6=null,p8=null,p9=null,p10=null;
         public static boolean b1 = false; 
         public static ArrayList<String> Lista= new ArrayList<String>();
         
-        public Cliente(Socket socket , JFrame Tabla) {
-            this.Tabla = Tabla;
+        public Cliente(Socket socket , View Tabla) {
+            this.view = Tabla;
             this.s = socket;
         }
 
@@ -34,11 +36,13 @@ class Cliente extends Thread {
                 Lista =  (ArrayList)DDatos.readObject(); 
                 
                 Vector<Object> fila = new Vector<Object>();
-                
-                fila.add(Lista.get(0));
-                
-                //Añadir el vector a la tabla de la clase View
-                this.Tabla.dtm.addRow(fila);
+                fila.add("#");
+                for(int i=0; i<10;i++){
+                    fila.add(Lista.get(i));
+                }
+               //Añadir el vector a la tabla de la clase View
+                this.view.dtm.addRow(fila);
+                //this.Tabla.setVisible(false);
                 
                 String n1 = Lista.get(0);
                 p1 = n1;
