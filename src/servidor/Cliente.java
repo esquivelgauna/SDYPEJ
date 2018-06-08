@@ -4,18 +4,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.JFrame;
 
 class Cliente extends Thread {
         private Socket s = null;
         private ObjectInputStream ois = null;
         private ObjectOutputStream oos = null;
+        private JFrame Tabla;
         ObjectInputStream DDatos = null;
         
         public static String p1 = null, p2 = null, p3 = null, p4 = null, p7 = null, p5=null,p6=null,p8=null,p9=null,p10=null;
         public static boolean b1 = false; 
         public static ArrayList<String> Lista= new ArrayList<String>();
         
-        public Cliente(Socket socket) {
+        public Cliente(Socket socket , JFrame Tabla) {
+            this.Tabla = Tabla;
             this.s = socket;
         }
 
@@ -28,6 +32,13 @@ class Cliente extends Thread {
                 DDatos = new ObjectInputStream( s.getInputStream());
                 
                 Lista =  (ArrayList)DDatos.readObject(); 
+                
+                Vector<Object> fila = new Vector<Object>();
+                
+                fila.add(Lista.get(0));
+                
+                //Añadir el vector a la tabla de la clase View
+                this.Tabla.dtm.addRow(fila);
                 
                 String n1 = Lista.get(0);
                 p1 = n1;
@@ -68,20 +79,6 @@ class Cliente extends Thread {
                 System.out.println("RAM total: "+n8+" MB");
                 System.out.println("RAM disponible: "+n9+" MB");
                 System.out.println("RAM usada: "+n10+" MB");
-                /*
-                // informacion en la consola
-                System.out.println("Se conectaron desde la IP: " + s.getInetAddress());
-                // enmascaro la entrada y salida de bytes
-                ois = new ObjectInputStream(s.getInputStream());
-                oos = new ObjectOutputStream(s.getOutputStream());
-                // leo el nombre que envia el cliente
-                String nom = (String) ois.readObject();
-
-                // armo el saludo personalizado que le quiero enviar
-                int saludo = 8;
-                // envio el saludo al cliente
-                oos.writeObject(saludo);
-                System.out.println("Saludo enviado...");*/
             } catch (Exception ex) {
                 ex.printStackTrace();
             } finally {

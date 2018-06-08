@@ -1,320 +1,172 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servidor;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SpringLayout;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
-
-public class Tabla extends javax.swing.JFrame {
-
-    // Variables declaration - do not modify
-    private javax.swing.JButton BtnEliminar;
-    private javax.swing.JButton BtnAgregar;
-    private javax.swing.JButton BtnLimpiar;
-    private javax.swing.JLabel JLNombre;
-    private javax.swing.JLabel JLPosicion;
-    private javax.swing.JLabel JLEquipo;
-    private javax.swing.JLabel JLTitulo;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable JTConexiones;
-    private javax.swing.JTextField JFNombre;
-    private javax.swing.JTextField JFPosicion;
-    private javax.swing.JButton BtnVer;
-    private javax.swing.JTextField JFEquipo;
-    private javax.swing.JButton BtnActualizar;
-    // End of variables declaration
-
-    public Tabla() {
-        initComponents();
+import javax.swing.JTable;
+ 
+public class Tabla extends JFrame {
+ 
+    /**************** ATRIBUTOS ***************************/
+    //CONTENEDOR PRINCIPAL
+    public JPanel contenedor;
+ 
+    //DEFINICIÓN DE LAS ETIQUETAS
+    public JLabel lblNombre;
+    public JLabel lblApellido;
+    public JLabel lblNIF;
+ 
+    //DEFINICIÓN DE LOS CUADROS DE TEXTO
+    public JTextField txtNombre;
+    public JTextField txtApellido;
+    public JTextField txtNIF;
+ 
+    //DEFINICIÓN DE LOS BOTONES
+    public JButton btnAdd;
+    public JButton btnDel;
+    public JButton btnUpd;
+ 
+    //DEFINICIÓN DE LOS OBJETOS PARA LA TABLA
+    public JScrollPane scroll; //Panel de scroll que contiene la tabla
+    public Object[][] datos; //Cuerpo de la tabla
+    public String[] cabecera;    //Cabecera de la tabla
+    public DefaultTableModel dtm;//Unión de la cabecera y la tabla
+    public JTable tabla; //Tabla propiamente dicha
+ 
+    /**************** MÉTODOS ***************************/
+    //CONSTRUCTOR
+    Tabla(){
+        //Métodos de la JFrame
+        setBounds(100, 100, 450, 300);//Definir las dimensiones de la ventana
+        setTitle("GESTIÓN DE CLIENTES - KADUM");    //Barra de título
+        setDefaultCloseOperation(EXIT_ON_CLOSE);    //Acción al pulsar salir
+ 
+        //CREAR EL CONTENEDOR PRINCIPAL Y AÑADIRLO A LA VENTANA
+        contenedor = new JPanel();
+        getContentPane().add(contenedor);
+ 
+        //INDICAR QUE SE QUIERE USAR SPRINGLAYOUT
+        SpringLayout sp = new SpringLayout();
+        contenedor.setLayout(sp);
+ 
+        //Vamos al lío
+        /**************** BOF ETIQUETAS  vvvvvvvvvvvvvvvv **/
+        //ETIQUETA NOMBRE
+        lblNombre = new JLabel("Nombre:");  //Crear el objeto
+        contenedor.add(lblNombre);      //Añadirlo al contenedor
+        sp.putConstraint(SpringLayout.NORTH, lblNombre, 10,
+                        SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, lblNombre,  10,
+                        SpringLayout.WEST, contenedor);
+        //ETIQUETA APELLIDOS
+        lblApellido = new JLabel("Apellidos:");
+        contenedor.add(lblApellido);
+        sp.putConstraint(SpringLayout.NORTH, lblApellido, 50,
+                        SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, lblApellido,  10,
+                        SpringLayout.WEST, contenedor);
+        //ETIQUETA NIF
+        lblNIF = new JLabel("NIF:");
+        contenedor.add(lblNIF);
+        sp.putConstraint(SpringLayout.NORTH, lblNIF, 90,
+                        SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, lblNIF,  10,
+                        SpringLayout.WEST, contenedor);
+        /**************** EOF ETIQUETAS  ^^^^^^^^^^^^^^^^ **/
+ 
+        /**************** BOF CUADROS DE  TEXTO vvvvvvvvv **/
+        //CUADRO DE TEXTO PARA EL NOMBRE
+        txtNombre       = new JTextField();
+        contenedor.add(txtNombre);
+        sp.putConstraint(SpringLayout.NORTH, txtNombre, 10,
+                        SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, txtNombre, 100,
+                        SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.EAST, txtNombre, 300,
+                        SpringLayout.WEST, contenedor);
+        //CUADRO DE TEXTO PARA EL NIF
+        txtApellido = new JTextField();
+        contenedor.add(txtApellido);    //añadir al contenedor
+        sp.putConstraint(SpringLayout.NORTH, txtApellido, 50,
+                        SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, txtApellido, 100,
+                        SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.EAST, txtApellido, 300,
+                        SpringLayout.WEST, contenedor);
+        //CUADRO DE TEXTO PARA LOS APELLIDOS
+        txtNIF      = new JTextField();
+        contenedor.add(txtNIF);
+        sp.putConstraint(SpringLayout.NORTH, txtNIF, 90, SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, txtNIF, 100, SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.EAST, txtNIF, 300, SpringLayout.WEST, contenedor);
+        /**************** EOF CUADROS DE  TEXTO ^^^^^^^^^ **/
+ 
+        /**************** BOF TABLA  vvvvvvvvvvvvvvvvvvvv **/
+        scroll      = new JScrollPane();
+        cabecera    = new String[] {"ID","NOMBRE","NIF"};
+        dtm         = new DefaultTableModel(datos,cabecera);
+        tabla       = new JTable(dtm);
+        scroll.setViewportView(tabla);
+        //y ahora se coloca el scrollpane...
+        contenedor.add(scroll); //añadir al contenedor
+        sp.putConstraint(SpringLayout.NORTH, scroll, 120,
+                        SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, scroll,   10,
+                        SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.EAST, scroll,  -10,
+                        SpringLayout.EAST, contenedor);
+        sp.putConstraint(SpringLayout.SOUTH, scroll, -50,
+                        SpringLayout.SOUTH, contenedor);
+        /**************** EOF TABLA ^^^^^^^^^^^^^^^^^^^^ **/
+ 
+        /**************** BOF BOTONES vvvvvvvvvvvvvvvvvv **/
+        //BOTÓN AÑADIR
+        btnAdd          = new JButton("Añadir");
+        contenedor.add(btnAdd);
+        sp.putConstraint(SpringLayout.SOUTH, btnAdd, -10,
+                        SpringLayout.SOUTH, contenedor);//colocarlo
+        sp.putConstraint(SpringLayout.WEST, btnAdd,   60,
+                        SpringLayout.WEST, contenedor);
+        //BOTÓN BORRAR
+        btnDel          = new JButton("Borrar");
+        contenedor.add(btnDel);
+        sp.putConstraint(SpringLayout.SOUTH, btnDel, -10,
+                        SpringLayout.SOUTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, btnDel,  190,
+                        SpringLayout.WEST, contenedor);
+        //BOTÓN MODIFICAR
+        btnUpd          = new JButton("Editar");
+        contenedor.add(btnUpd);
+        sp.putConstraint(SpringLayout.SOUTH, btnUpd, -10,
+                        SpringLayout.SOUTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, btnUpd,  310,
+                        SpringLayout.WEST, contenedor);
+        /**************** EOF BOTONES ^^^^^^^^^^^^^^^^^^^^ **/
+ 
+        //Se hace visible la ventana
+        setVisible(true);
+ 
     }
-
-    private void retrieve() {
-        DefaultTableModel dm = new DBUpdater().getData();
-        JTConexiones.setModel(dm);
-    }
-
-    //@SuppressWarnings("unchecked")
-    private void initComponents() {
-
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        JTConexiones = new javax.swing.JTable();
-        JLNombre = new javax.swing.JLabel();
-        JLPosicion = new javax.swing.JLabel();
-        JLEquipo = new javax.swing.JLabel();
-        JLTitulo = new javax.swing.JLabel();
-        JFNombre = new javax.swing.JTextField();
-        JFEquipo = new javax.swing.JTextField();
-        JFPosicion = new javax.swing.JTextField();
-        BtnVer = new javax.swing.JButton();
-        BtnAgregar = new javax.swing.JButton();
-        BtnActualizar = new javax.swing.JButton();
-        BtnEliminar = new javax.swing.JButton();
-        BtnLimpiar = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel1.setBackground(new java.awt.Color(255, 200, 100));
-
-        JTConexiones.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{},
-                new String[]{}
-        ));
-        JTConexiones.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(JTConexiones);
-
-        JLTitulo.setText("Computadoras conectadas");
-        JLNombre.setText("Nombre");
-        JLPosicion.setText("Posición");
-        JLEquipo.setText("Equipo");
-        //Centramos
-        JLTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        JLNombre.setHorizontalAlignment(SwingConstants.CENTER);
-        JLPosicion.setHorizontalAlignment(SwingConstants.CENTER);
-        JLEquipo.setHorizontalAlignment(SwingConstants.CENTER);
-        //Texto de botones
-        BtnVer.setText("Ver");
-        BtnAgregar.setText("Agregar");
-        BtnActualizar.setText("Actualizar");
-        BtnEliminar.setText("Eliminar");
-        BtnLimpiar.setText("Limpiar");
-
-        BtnVer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                retrieveBtnActionPerformed(evt);
-            }
-        });
-
-        BtnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBtnActionPerformed(evt);
-            }
-        });
-
-        BtnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateBtnActionPerformed(evt);
-            }
-        });
-
-        BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteActionPerformed(evt);
-            }
-        });
-
-        BtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearBtnActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-
-        jPanel2Layout.setAutoCreateGaps(true);
-        jPanel2Layout.setAutoCreateContainerGaps(true);
-
-        jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                                        .addComponent(BtnLimpiar, 100, 200, 400)
-                                )
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(JLNombre, 100, 200, Short.MAX_VALUE)
-                                                                        .addComponent(JLPosicion, 100, 200, Short.MAX_VALUE)
-                                                                        .addComponent(JLEquipo, 100, 200, Short.MAX_VALUE)
-                                                                )
-                                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(JFNombre, 100, 200, Short.MAX_VALUE)
-                                                                        .addComponent(JFPosicion, 100, 200, Short.MAX_VALUE)
-                                                                        .addComponent(JFEquipo, 100, 200, Short.MAX_VALUE)
-                                                                )
-                                                        )
-                                                )
-                                        )
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addComponent(BtnActualizar, 100, 200, Short.MAX_VALUE)
-                                                                .addComponent(BtnEliminar, 100, 200, Short.MAX_VALUE))
-                                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addComponent(BtnAgregar, 100, 200, Short.MAX_VALUE)
-                                                                .addComponent(BtnVer, 100, 200, Short.MAX_VALUE))
-                                                )
-                                        )
-                                )
-                        )
-        );
-
-        jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(JLNombre)
-                                                                        .addComponent(JFNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(JLPosicion)
-                                                                        .addComponent(JFPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(JLEquipo)
-                                                                        .addComponent(JFEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                )
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(BtnAgregar)
-                                                        .addComponent(BtnVer))
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(BtnActualizar)
-                                                        .addComponent(BtnEliminar)
-                                                )
-                                        )
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(BtnLimpiar)
-                                        )
-                                )
-                        )
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(JLTitulo, 0, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        )
-                        .addGroup(javax.swing.GroupLayout.Alignment.CENTER, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel2, 800, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        )
-        );
-        jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(JLTitulo)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        )
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        pack();
-    }// </editor-fold>
-
-    //RETRIEVE BUTTON CLICKED
-    private void retrieveBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        retrieve();
-    }
-
-    //ADD OR SAVE
-    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        if (new DBUpdater().add(JFNombre.getText(), JFPosicion.getText(), JFEquipo.getText())) {
-            JOptionPane.showMessageDialog(null, "Guardado");
-
-            //CLEAR TXT
-            JFNombre.setText("");
-            JFPosicion.setText("");
-            JFEquipo.setText("");
-
-            retrieve();
-        } else {
-            JOptionPane.showMessageDialog(null, "No se guardo");
-        }
-    }
-
-    //SET SELECTED VALUE TO TEXTFIELDS
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {
-        String name = JTConexiones.getValueAt(JTConexiones.getSelectedRow(), 1).toString();
-        String pos = JTConexiones.getValueAt(JTConexiones.getSelectedRow(), 2).toString();
-        String team = JTConexiones.getValueAt(JTConexiones.getSelectedRow(), 3).toString();
-        JFNombre.setText(name);
-        JFPosicion.setText(pos);
-        JFEquipo.setText(team);
-
-    }
-
-    //UPDATE
-    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        int index = JTConexiones.getSelectedRow();
-        String id = JTConexiones.getValueAt(index, 0).toString();
-
-        if (new DBUpdater().update(id, JFNombre.getText(), JFPosicion.getText(), JFEquipo.getText())) {
-            JOptionPane.showMessageDialog(null, "Successfully Updated");
-
-            //CLEAR TXT
-            JFNombre.setText("");
-            JFPosicion.setText("");
-            JFEquipo.setText("");
-
-            retrieve();
-        } else {
-            JOptionPane.showMessageDialog(null, "Not Updated");
-        }
-    }
-
-    //DELETE
-    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {
-        String[] options = {"Si", "No"};
-
-        int index = JTConexiones.getSelectedRow();
-        System.out.println("ID:" + index);
-        if (index != -1) {
-            int answ = JOptionPane.showOptionDialog(null, "Estas seguro ??", "Confirmar", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-            if (answ == 0) {
-                String id = JTConexiones.getValueAt(index, 0).toString();
-                if (new DBUpdater().delete(id)) {
-                    JOptionPane.showMessageDialog(null, "Eliminado");
-
-                    //CLEAR TXT
-                    JFNombre.setText("");
-                    JFPosicion.setText("");
-                    JFEquipo.setText("");
-
-                    retrieve();
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se elimino");
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Primero Selecciona una fila..");
-        }
-
-    }
-
-    //CLEAR BUTTON CLICKED
-    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        JTConexiones.setModel(new DefaultTableModel());
-    }
-
+ 
+    /*public void conectaControlador(  Controller c  ){
+ 
+        btnAdd.addActionListener(c);
+        btnAdd.setActionCommand("INSERTAR");
+ 
+        btnDel.addActionListener(c);
+        btnDel.setActionCommand("BORRAR");
+ 
+        btnUpd.addActionListener(c);
+        btnUpd.setActionCommand("MODIFICAR");
+ 
+        tabla.addMouseListener(c);
+        //sólo se permite pulsar una fila a la vez.
+        tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }*/
 }
