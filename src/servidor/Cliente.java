@@ -4,44 +4,39 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 import java.util.Vector;
 import javax.swing.JFrame;
 
 class Cliente extends Thread {
-    
-        private View view;
-        
-        private Socket s = null;
-        private ObjectInputStream ois = null;
-        private ObjectOutputStream oos = null;
-        ObjectInputStream DDatos = null;
-        
-        public static String p1 = null, p2 = null, p3 = null, p4 = null, p7 = null, p5=null,p6=null,p8=null,p9=null,p10=null;
-        public static boolean b1 = false; 
-        public static ArrayList<String> Lista= new ArrayList<String>();
-        
-        public Cliente(Socket socket , View Tabla) {
-            this.view = Tabla;
-            this.s = socket;
-        }
 
-        public void run() {
-            
-            try {
-                //informacion en la consola
-                System.out.println("Conexion desde la IP: "+s.getInetAddress());
+    private View view;
 
-                DDatos = new ObjectInputStream( s.getInputStream());
-                
-                Lista =  (ArrayList)DDatos.readObject(); 
-                
-                Vector<Object> fila = new Vector<Object>();
-                fila.add("#");
-                for(int i=0; i<10;i++){
-                    fila.add(Lista.get(i));
-                }
-               //Añadir el vector a la tabla de la clase View
-                this.view.dtm.addRow(fila);
+    private Socket s = null;
+    ObjectInputStream DDatos = null;
+
+    public static String p1 = null, p2 = null, p3 = null, p4 = null, p7 = null, p5 = null, p6 = null, p8 = null, p9 = null, p10 = null;
+    public static boolean b1 = false;
+    public static HashMap<String, String> Lista = new HashMap<>();
+
+    public Cliente(Socket socket, View Tabla) {
+        this.view = Tabla;
+        this.s = socket;
+    }
+
+    public void run() {
+
+        try {
+            //informacion en la consola
+            System.out.println("Conexion desde la IP: " + s.getInetAddress());
+
+            DDatos = new ObjectInputStream(s.getInputStream());
+
+            //Lista =   ; 
+            Conexion((HashMap) DDatos.readObject());
+
+            /*
                 //this.Tabla.setVisible(false);
                 
                 String n1 = Lista.get(0);
@@ -82,24 +77,78 @@ class Cliente extends Thread {
                 System.out.println("Uso total de nuecleos de CPU: "+n7);
                 System.out.println("RAM total: "+n8+" MB");
                 System.out.println("RAM disponible: "+n9+" MB");
-                System.out.println("RAM usada: "+n10+" MB");
+                System.out.println("RAM usada: "+n10+" MB");*/
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (s != null) {
+                    s.close();
+                }
+                System.out.println("Conexion cerrada!");
             } catch (Exception ex) {
                 ex.printStackTrace();
-            } finally {
-                try {
-                    if (oos != null) {
-                        oos.close();
-                    }
-                    if (ois != null) {
-                        ois.close();
-                    }
-                    if (s != null) {
-                        s.close();
-                    }
-                    System.out.println("Conexion cerrada!");
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
             }
         }
     }
+
+    public void Conexion(HashMap Lista) {
+        //this.view.Clientes
+        String Mac = (String) Lista.get("MAC");
+        if(Existe(Mac)){
+            
+            System.out.println("Ya existe");
+        }else{
+            
+            System.out.println("No existe..");
+        }
+        this.view.Clientes.put( Mac, Lista );
+        Tabla();
+        
+        
+        /*Vector<Object> fila = new Vector<Object>();
+        fila.add("#");
+        for (int i = 0; i < 12; i++) {
+            fila.add(Lista.get(i));
+        }*/
+        //Añadir el vector a la tabla de la clase View
+        
+        
+    }
+
+    public Boolean Existe(String Mac) {
+        return this.view.Clientes.containsKey(Mac);
+    }
+    
+    public void Tabla(){
+        //System.out.println(this.view.Clientes);
+        Set<String> keys = this.view.Clientes.keySet();
+        
+        Vector<Object> fila = new Vector<Object>();
+
+        for(String key: keys){
+            System.out.println("Value of "+key+" is: "+ this.view.Clientes.get(key) );
+            fila.add(this.view.Clientes.get(key).get("MAC"));
+            fila.add(this.view.Clientes.get(key).get("IP"));
+            fila.add(this.view.Clientes.get(key).get("Desc"));
+            fila.add(this.view.Clientes.get(key).get("CPU"));
+            fila.add(this.view.Clientes.get(key).get("Model"));
+            fila.add(this.view.Clientes.get(key).get("MHZ"));
+            fila.add(this.view.Clientes.get(key).get("Cores"));
+            fila.add(this.view.Clientes.get(key).get("CoresU"));
+            fila.add(this.view.Clientes.get(key).get("RAMT"));
+            fila.add(this.view.Clientes.get(key).get("RAMF"));
+            fila.add(this.view.Clientes.get(key).get("RAMU"));
+            //fila.add(this.view.Clientes.get(key).get("RAMT"));
+            
+            /* Set<String> keys2 = this.view.Clientes.get(key).keySet();
+            for(String key2: keys2){
+                fila.add(this.view.Clientes.get(key).get(key2));
+            }*/
+            this.view.dtm.setRowCount(0);
+            this.view.dtm.addRow(fila);
+        }
+        
+        
+    }
+}

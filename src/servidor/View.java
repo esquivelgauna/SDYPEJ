@@ -1,5 +1,6 @@
 package servidor;
 
+import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -41,6 +42,7 @@ public class View extends JFrame {
     protected String[] cabecera;    //Cabecera de la tabla
     protected DefaultTableModel dtm;//Unión de la cabecera y la tabla
     protected JTable tabla; //Tabla propiamente dicha
+    protected HashMap<String, HashMap> Clientes = new HashMap<String, HashMap>();; //Tabla propiamente dicha
 
     /**
      * ************** MÉTODOS **************************
@@ -124,9 +126,9 @@ public class View extends JFrame {
          * ************** BOF TABLA vvvvvvvvvvvvvvvvvvvv *
          */
         scroll = new JScrollPane();
-        cabecera = new String[]{"ID", "Descripcion", "Nombre",
-            "Nombre CPU", "Modelo", "MHZ", "Total de nuecleos de CPU",
-            "Uso total de nuecleos de CPU", "RAM total", "RAM disponible", "RAM usada"};
+        cabecera = new String[]{"MAP","IP", "Descripcion", "CPU",
+            "Modelo", "MHZ", "#Nucleos",
+            "Uso de CPU", "RAM total", "RAM disponible", "RAM usada"};
         dtm = new DefaultTableModel(datos, cabecera);
         tabla = new JTable(dtm);
         scroll.setViewportView(tabla);
