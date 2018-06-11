@@ -69,24 +69,18 @@ public class View extends JFrame {
         //ETIQUETA NOMBRE
         lblNombre = new JLabel("Nombre:");  //Crear el objeto
         contenedor.add(lblNombre);      //Añadirlo al contenedor
-        sp.putConstraint(SpringLayout.NORTH, lblNombre, 10,
-                SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, lblNombre, 10,
-                SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.NORTH, lblNombre, 10, SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, lblNombre, 10,  SpringLayout.WEST, contenedor);
         //ETIQUETA APELLIDOS
         lblApellido = new JLabel("Apellidos:");
         contenedor.add(lblApellido);
-        sp.putConstraint(SpringLayout.NORTH, lblApellido, 50,
-                SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, lblApellido, 10,
-                SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.NORTH, lblApellido, 10,  SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, lblApellido, 310,   SpringLayout.WEST, contenedor);
         //ETIQUETA NIF
         lblNIF = new JLabel("NIF:");
         contenedor.add(lblNIF);
-        sp.putConstraint(SpringLayout.NORTH, lblNIF, 90,
-                SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, lblNIF, 10,
-                SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.NORTH, lblNIF, 10, SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, lblNIF, 610,  SpringLayout.WEST, contenedor);
         /**
          * ************** EOF ETIQUETAS ^^^^^^^^^^^^^^^^ *
          */
@@ -97,27 +91,21 @@ public class View extends JFrame {
         //CUADRO DE TEXTO PARA EL NOMBRE
         txtNombre = new JTextField();
         contenedor.add(txtNombre);
-        sp.putConstraint(SpringLayout.NORTH, txtNombre, 10,
-                SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, txtNombre, 100,
-                SpringLayout.WEST, contenedor);
-        sp.putConstraint(SpringLayout.EAST, txtNombre, 300,
-                SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.NORTH, txtNombre, 10,  SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, txtNombre, 100,  SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.EAST, txtNombre, 300,  SpringLayout.WEST, contenedor);
         //CUADRO DE TEXTO PARA EL NIF
         txtApellido = new JTextField();
         contenedor.add(txtApellido);    //añadir al contenedor
-        sp.putConstraint(SpringLayout.NORTH, txtApellido, 50,
-                SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, txtApellido, 100,
-                SpringLayout.WEST, contenedor);
-        sp.putConstraint(SpringLayout.EAST, txtApellido, 300,
-                SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.NORTH, txtApellido, 10,SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, txtApellido, 400,SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.EAST, txtApellido, 600,SpringLayout.WEST, contenedor);
         //CUADRO DE TEXTO PARA LOS APELLIDOS
         txtNIF = new JTextField();
         contenedor.add(txtNIF);
-        sp.putConstraint(SpringLayout.NORTH, txtNIF, 90, SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, txtNIF, 100, SpringLayout.WEST, contenedor);
-        sp.putConstraint(SpringLayout.EAST, txtNIF, 300, SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.NORTH, txtNIF, 10, SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, txtNIF, 650, SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.EAST, txtNIF, -10, SpringLayout.EAST, contenedor);
         /**
          * ************** EOF CUADROS DE TEXTO ^^^^^^^^^ *
          */
@@ -126,7 +114,7 @@ public class View extends JFrame {
          * ************** BOF TABLA vvvvvvvvvvvvvvvvvvvv *
          */
         scroll = new JScrollPane();
-        cabecera = new String[]{"MAP","IP", "Descripcion", "CPU",
+        cabecera = new String[]{"MAC","IP", "Descripcion", "CPU",
             "Modelo", "MHZ", "#Nucleos",
             "Uso de CPU", "RAM total", "RAM disponible", "RAM usada"};
         dtm = new DefaultTableModel(datos, cabecera);
@@ -134,14 +122,10 @@ public class View extends JFrame {
         scroll.setViewportView(tabla);
         //y ahora se coloca el scrollpane...
         contenedor.add(scroll); //añadir al contenedor
-        sp.putConstraint(SpringLayout.NORTH, scroll, 90,
-                SpringLayout.NORTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, scroll, 10,
-                SpringLayout.WEST, contenedor);
-        sp.putConstraint(SpringLayout.EAST, scroll, -10,
-                SpringLayout.EAST, contenedor);
-        sp.putConstraint(SpringLayout.SOUTH, scroll, -50,
-                SpringLayout.SOUTH, contenedor);
+        sp.putConstraint(SpringLayout.NORTH, scroll, 50, SpringLayout.NORTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, scroll, 10,   SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.EAST, scroll, -10,  SpringLayout.EAST, contenedor);
+        sp.putConstraint(SpringLayout.SOUTH, scroll, -35, SpringLayout.SOUTH, contenedor);
         /**
          * ************** EOF TABLA ^^^^^^^^^^^^^^^^^^^^ *
          */
@@ -152,24 +136,18 @@ public class View extends JFrame {
         //BOTÓN AÑADIR
         btnAdd = new JButton("Añadir");
         contenedor.add(btnAdd);
-        sp.putConstraint(SpringLayout.SOUTH, btnAdd, -10,
-                SpringLayout.SOUTH, contenedor);//colocarlo
-        sp.putConstraint(SpringLayout.WEST, btnAdd, 60,
-                SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.SOUTH, btnAdd, -5, SpringLayout.SOUTH, contenedor);//colocarlo
+        sp.putConstraint(SpringLayout.WEST, btnAdd, 10,   SpringLayout.WEST, contenedor);
         //BOTÓN BORRAR
         btnDel = new JButton("Borrar");
         contenedor.add(btnDel);
-        sp.putConstraint(SpringLayout.SOUTH, btnDel, -10,
-                SpringLayout.SOUTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, btnDel, 190,
-                SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.SOUTH, btnDel, -5, SpringLayout.SOUTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, btnDel, 85,  SpringLayout.WEST, contenedor);
         //BOTÓN MODIFICAR
         btnUpd = new JButton("Editar");
         contenedor.add(btnUpd);
-        sp.putConstraint(SpringLayout.SOUTH, btnUpd, -10,
-                SpringLayout.SOUTH, contenedor);
-        sp.putConstraint(SpringLayout.WEST, btnUpd, 310,
-                SpringLayout.WEST, contenedor);
+        sp.putConstraint(SpringLayout.SOUTH, btnUpd, -5, SpringLayout.SOUTH, contenedor);
+        sp.putConstraint(SpringLayout.WEST, btnUpd, 160,  SpringLayout.WEST, contenedor);
         /**
          * ************** EOF BOTONES ^^^^^^^^^^^^^^^^^^^^ *
          */
