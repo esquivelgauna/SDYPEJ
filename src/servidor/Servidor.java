@@ -7,4 +7,3 @@ public class Servidor {
         new ServidorA(MiTabla);
     }
 }
-
